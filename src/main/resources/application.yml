@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: hhplus-clean-architecture
+
+  profiles:
+    active: prod # 기본 활성화 프로파일 설정
+
+---
+# 운영 환경 설정 (MySQL)
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://localhost:3306/lecture
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: validate # 데이터베이스 스키마 검증
+    show-sql: true # SQL 쿼리 로그 출력
+
+---
+# 테스트 환경 설정 (H2)
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MYSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop # 애플리케이션 실행 시 스키마 생성 및 삭제
+    show-sql: true # SQL 쿼리 로그 출력
