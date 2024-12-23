@@ -43,40 +43,40 @@
 - 동시성 이슈를 고려 하여 구현합니다.
 
 ## ERD
-![스크린샷 2024-12-24 오전 12 27 07](https://github.com/user-attachments/assets/fd7d44a4-3c0c-45a8-b366-51924db41e2a)
+![스크린샷 2024-12-24 오전 12 34 13](https://github.com/user-attachments/assets/22f66911-7ff3-4258-9f90-3f266848b25f)
 
+### lecture(특강) 
+- **`id`** - 특강의 고유 식별자 (Primary Key)
 
-lecture(특강), lecture_registration(특강 신청 목록), user(사용자) 3가지의 테이블로 구분했습니다.  
+- **`title`** - 특강명
 
-### 1.lecture(특강) 
-id : 특강의 PK  
-title : 특강명  
-lecturer : 강사명  
-lecture_date : 특강일  
-start_time : 시작시간  
-end_time : 종료시간  
-remaining_slots : 남은 자리 default 30
+- **`lecturer`** - 강사명
 
-- 특강은 단일 단위로 진행되는 경우가 지배적이라고 생각해 시작일/종료일의 구분은 두지 않았습니다.
-- 날짜 기준으로 조회하여 시간은 사용하지 않겠지만,특강의 시작시간/종료시간은 정해져야 한다고 생각해 컬럼으로 두었습니다.
+- **`lecture_date`** - 특강일 - 날짜 기준으로 특강 조회 시 사용됩니다.
 
-### 2.lecture_registration
+- **`start_time`** - 특강 시작 시간(기본 정보)
 
+- **`end_time`** - 특강 종료 시간(기본 정보)
 
-Table lecture {
-  id integer [pk, increment]
-  title varchar
-  lecturer varchar
-  lecture_date date
-  start_time time
-  end_time time
-  capacity integer [default: 30]
-}
+- **`remaining_capacity`** - 특강의 남은 자리 수. default = 30
 
+> #### 특강은 단일 단위로 진행되는 경우가 지배적이라고 생각해 시작일/종료일의 구분은 두지 않았습니다. 
+> #### 날짜 기준으로 조회하여 시간은 사용하지 않겠지만,특강의 시작시간/종료시간은 기본값이라 생각해 컬럼으로 두었습니다.
 
+### lecture_registration(특강 신청 정보)
+- **`id`** - 특강신청 고유 식별자 (Primary Key)
 
+- **`lecture_id`** - 신청한 특강의 ID
+  - **참조:** `lecture.id`(논리)
 
-강의는 반드시 하루 기준이며, 시작시간과 종료시간이 존재한다. 
+- **`user_id`**  - 신청한 사용자의 ID
+  - **참조:** `user.id`(논리)
+
+### user(사용자)
+
+- **`id`** - 사용자 고유 식별자 (Primary Key)
+
+- **`name`** - 사용자 이름
 
 ## 클린 + 레이어드 아키텍처 구조
 ```plaintext
