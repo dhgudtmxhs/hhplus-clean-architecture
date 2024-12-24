@@ -47,7 +47,7 @@
 
 ![스크린샷 2024-12-24 오후 10 22 50](https://github.com/user-attachments/assets/52014336-6037-4a4a-a7c7-f440b7fe46b7)
 
-> #### Table default : delete_at, created_at, updated_at
+> #### Table default : id, delete_at, created_at, updated_at
 
 ### lecture(특강) 
 - **`id`** - 특강의 고유 식별자 (Primary Key)
