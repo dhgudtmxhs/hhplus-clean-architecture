@@ -43,7 +43,11 @@
 - 동시성 이슈를 고려 하여 구현합니다.
 
 ## ERD
-![스크린샷 2024-12-24 오전 12 34 13](https://github.com/user-attachments/assets/22f66911-7ff3-4258-9f90-3f266848b25f)
+![스크린샷 2024-12-24 오후 10 14 45](https://github.com/user-attachments/assets/193dc1b3-249f-400d-ade4-036c72af4480)
+
+![스크린샷 2024-12-24 오후 10 22 50](https://github.com/user-attachments/assets/52014336-6037-4a4a-a7c7-f440b7fe46b7)
+
+> #### Table default : delete_at, created_at, updated_at
 
 ### lecture(특강) 
 - **`id`** - 특강의 고유 식별자 (Primary Key)
@@ -55,7 +59,7 @@
 - **`lecture_date`** - 특강일 - 날짜 기준으로 특강 조회 시 사용됩니다.
 
 - **`start_time`** - 특강 시작 시간
-- 
+  
 - **`end_time`** - 특강 종료 시간
 
 - **`remaining_capacity`** - 특강의 남은 자리 수. default = 30
@@ -72,14 +76,14 @@
 - **`user_id`**  - 신청한 사용자의 ID
   - **참조:** `user.id`(논리)
  
-lecture_registration 의 userId, lectureId를 Unique로 두어  
-STEP4 - 같은 사용자가 동일한 특강에 대해 신청 성공하지 못하도록 개선 해결해보기 -> 락걸고, 락 오류 방지정도? 로 사용
+> #### lecture_registration 의 userId, lectureId를 Unique로 두어 중복 신청을 방지합니다.
 
 ### user(사용자)
 
 - **`id`** - 사용자 고유 식별자 (Primary Key)
 
 - **`name`** - 사용자 이름
+
 
 ## 클린 + 레이어드 아키텍처 구조
 ```plaintext
