@@ -54,9 +54,9 @@
 
 - **`lecture_date`** - 특강일 - 날짜 기준으로 특강 조회 시 사용됩니다.
 
-- **`start_time`** - 특강 시작 시간(기본 정보)
-
-- **`end_time`** - 특강 종료 시간(기본 정보)
+- **`start_time`** - 특강 시작 시간
+- 
+- **`end_time`** - 특강 종료 시간
 
 - **`remaining_capacity`** - 특강의 남은 자리 수. default = 30
 
