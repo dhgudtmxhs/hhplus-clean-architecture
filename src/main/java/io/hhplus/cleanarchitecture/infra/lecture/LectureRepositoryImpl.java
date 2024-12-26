@@ -24,9 +24,8 @@ public class LectureRepositoryImpl implements LectureRepository {
 
     @Override
     public Optional<Lecture> findLectureById(Integer lectureId) {
-        return lectureJPARepository.findById(lectureId);
+        return lectureJPARepository.findLectureById(lectureId);
     }
-
 
     @Override
     public void saveLecture(Lecture lecture) {
