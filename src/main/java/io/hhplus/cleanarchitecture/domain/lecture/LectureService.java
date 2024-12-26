@@ -49,6 +49,12 @@ public class LectureService {
         return lectureRepository.findAvailableLecturesByDate(date);
     }
 
+    // 특정 사용자의 신청 완료된 특강 조회
+    public List<LectureRegistration> getCompletedLecturesByUserId(Integer userId) {
+        return lectureRepository.findAllByUserId(userId);
+    }
+
+
 }
 
 

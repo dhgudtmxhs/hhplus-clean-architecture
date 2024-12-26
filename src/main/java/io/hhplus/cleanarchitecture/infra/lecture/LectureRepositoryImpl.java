@@ -38,4 +38,8 @@ public class LectureRepositoryImpl implements LectureRepository {
       return lectureJPARepository.findAvailableLecturesByDate(lectureDate);
     }
 
+    @Override
+    public List<LectureRegistration> findAllByUserId(Integer userId) {
+        return lectureRegistrationJPARepository.findAllByUserId(userId);
+    }
 }

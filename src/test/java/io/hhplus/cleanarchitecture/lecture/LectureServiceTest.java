@@ -179,5 +179,38 @@ class LectureServiceTest {
                 .hasMessageContaining("신청일은 null 일 수 없습니다.");
     }
 
+    @Test
+    void 특정_사용자의_신청_완료된_특강목록을_조회한다() {
+        // given
+        Integer userId = 1;
+        List<LectureRegistration> mockRegistrations = List.of(
+                LectureRegistration.builder().id(1).build(),
+                LectureRegistration.builder().id(2).build()
+        );
+        when(lectureRepository.findAllByUserId(userId)).thenReturn(mockRegistrations);
+
+        // when
+        List<LectureRegistration> result = lectureService.getCompletedLecturesByUserId(userId);
+
+        // then
+        assertThat(result).hasSize(2);
+        assertThat(result).extracting(LectureRegistration::getId).containsExactly(1, 2);
+        verify(lectureRepository).findAllByUserId(userId);
+    }
+
+    @Test
+    void 특정_사용자의_신청_완료된_특강이_없으면_빈_리스트를_반환한다() {
+        // given
+        Integer userId = 1;
+        when(lectureRepository.findAllByUserId(userId)).thenReturn(List.of());
+
+        // when
+        List<LectureRegistration> result = lectureService.getCompletedLecturesByUserId(userId);
+
+        // then
+        assertThat(result).isEmpty(); // 빈 리스트인지 확인
+        verify(lectureRepository).findAllByUserId(userId);
+    }
+
 }
 

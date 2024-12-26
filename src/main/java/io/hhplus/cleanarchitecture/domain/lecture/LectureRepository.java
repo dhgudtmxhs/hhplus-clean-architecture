@@ -14,4 +14,6 @@ public interface LectureRepository {
 
     List<Lecture> findAvailableLecturesByDate(LocalDate date);
 
+    List<LectureRegistration> findAllByUserId(Integer userId);
+
 }
