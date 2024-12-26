@@ -1,5 +1,7 @@
 package io.hhplus.cleanarchitecture.domain.lecture;
 
+import io.hhplus.cleanarchitecture.domain.user.User;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -16,4 +18,5 @@ public interface LectureRepository {
 
     List<LectureRegistration> findAllByUserId(Integer userId);
 
+    boolean existsByLectureAndUser(Lecture lecture, User user);
 }

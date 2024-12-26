@@ -28,6 +28,13 @@ public class LectureService {
         return lecture;
     }
 
+    // 중복 신청 검증
+    public void validateNotRegistered(Lecture lecture, User user) {
+        if (lectureRepository.existsByLectureAndUser(lecture, user)) {
+            throw new IllegalArgumentException("이미 신청된 강의입니다.");
+        }
+    }
+
     // 특강 신청
     public LectureRegistration registerLecture(Lecture lecture, User user) {
         LectureRegistration registration = LectureRegistration.builder()
