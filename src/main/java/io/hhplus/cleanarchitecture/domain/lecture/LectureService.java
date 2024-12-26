@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +43,11 @@ public class LectureService {
         lectureRepository.saveLecture(lecture);
     }
 
+    // 특정 날짜에 신청 가능한 특강 조회
+    public List<Lecture> getAvailableLecturesByLectureDate(LocalDate date) {
+        Lecture.validateDateNotNull(date);
+        return lectureRepository.findAvailableLecturesByDate(date);
+    }
 
 }
 

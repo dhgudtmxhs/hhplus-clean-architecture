@@ -27,9 +27,15 @@ public class LectureRepositoryImpl implements LectureRepository {
         return lectureJPARepository.findById(lectureId);
     }
 
+
     @Override
     public void saveLecture(Lecture lecture) {
         lectureJPARepository.save(lecture);
+    }
+
+    @Override
+    public List<Lecture> findAvailableLecturesByDate(LocalDate lectureDate) {
+      return lectureJPARepository.findAvailableLecturesByDate(lectureDate);
     }
 
 }

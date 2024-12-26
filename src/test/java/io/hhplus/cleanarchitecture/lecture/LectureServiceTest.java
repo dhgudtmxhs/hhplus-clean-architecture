@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -139,5 +140,44 @@ class LectureServiceTest {
         assertThat(mockLecture.getRemainingCapacity()).isEqualTo(9);
         verify(lectureRepository).saveLecture(mockLecture);
     }
+
+    @Test
+    void 특정_날짜에_신청_가능한_특강들을_조회한다() {
+        // given
+        LocalDate lectureDate = LocalDate.now().plusDays(1);
+        List<Lecture> mockLectures = List.of(
+                Lecture.builder()
+                        .id(1)
+                        .lectureDate(lectureDate)
+                        .remainingCapacity(10)
+                        .build(),
+                Lecture.builder()
+                        .id(2)
+                        .lectureDate(lectureDate)
+                        .remainingCapacity(5)
+                        .build()
+        );
+        when(lectureRepository.findAvailableLecturesByDate(lectureDate)).thenReturn(mockLectures);
+
+        // when
+        List<Lecture> result = lectureService.getAvailableLecturesByLectureDate(lectureDate);
+
+        // then
+        assertThat(result).hasSize(2);
+        assertThat(result).containsExactlyElementsOf(mockLectures);
+        verify(lectureRepository).findAvailableLecturesByDate(lectureDate);
+    }
+
+    @Test
+    void 특정_날짜에_신청_가능한_특강들을_조회시_날짜검증에_실패하면_IllegalArgumentException_예외를_반환한다() {
+        // given
+        LocalDate lectureDate = null;
+
+        // when & then
+        assertThatThrownBy(() -> lectureService.getAvailableLecturesByLectureDate(lectureDate))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("신청일은 null 일 수 없습니다.");
+    }
+
 }
 
