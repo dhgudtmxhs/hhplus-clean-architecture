@@ -40,11 +40,10 @@
 - 동시성 이슈를 고려 하여 구현합니다.
 
 ## ERD
-![스크린샷 2024-12-24 오후 10 14 45](https://github.com/user-attachments/assets/6441e9e7-8312-442e-8151-44a77b9057ca)
+![스크린샷 2024-12-24 오후 10 14 45](https://github.com/user-attachments/assets/6441e9e7-8312-442e-8151-44a77b9057ca)
 
 
-![스크린샷 2024-12-24 오후 10 22 50](https://github.com/user-attachments/assets/63912f52-f6bf-480f-b432-4b1d809b9040)
-
+![스크린샷 2024-12-24 오후 10 22 50](https://github.com/user-attachments/assets/63912f52-f6bf-480f-b432-4b1d809b9040)
 
 > #### Table default : id, delete_at, created_at, updated_at
 
