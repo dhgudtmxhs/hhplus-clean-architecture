@@ -74,7 +74,7 @@
 - **`user_id`**  - 신청한 사용자의 ID
   - **참조:** `user.id`(논리)
  
-> #### lecture_registration 의 userId, lectureId를 Unique로 두어 Lock과 별개로 중복 신청을 방지합니다.
+> #### lecture_registration 의 userId, lectureId를 Unique로 두었습니다.
 
 ### user(사용자)
 
