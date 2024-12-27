@@ -91,7 +91,7 @@ public class LectureFacadeConcurrencyTest {
 
     @Test
     void 동일_사용자가_같은_특강을_5번_신청했을_때_1번만_성공한다() throws InterruptedException {
-        int totalRequests = 5000;
+        int totalRequests = 5;
         CountDownLatch startLatch = new CountDownLatch(1);
         CountDownLatch endLatch = new CountDownLatch(totalRequests);
         ConcurrentLinkedQueue<Exception> exceptions = new ConcurrentLinkedQueue<>();
@@ -122,7 +122,7 @@ public class LectureFacadeConcurrencyTest {
         // 결과 검증
         int successfulRequests = totalRequests - exceptions.size();
         assertEquals(1, successfulRequests, "동일한 사용자에 대해 1번만 신청이 성공해야 한다.");
-        assertEquals(4999, exceptions.size(), "동일한 사용자에 대해 4번은 실패해야 한다.");
+        assertEquals(4, exceptions.size(), "동일한 사용자에 대해 4번은 실패해야 한다.");
     }
 
 
