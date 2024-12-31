@@ -3,6 +3,7 @@ package io.hhplus.cleanarchitecture.infra.lecture;
 import io.hhplus.cleanarchitecture.domain.lecture.Lecture;
 import io.hhplus.cleanarchitecture.domain.lecture.LectureRegistration;
 import io.hhplus.cleanarchitecture.domain.lecture.LectureRepository;
+import io.hhplus.cleanarchitecture.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -40,5 +41,10 @@ public class LectureRepositoryImpl implements LectureRepository {
     @Override
     public List<LectureRegistration> findAllByUserId(Integer userId) {
         return lectureRegistrationJPARepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public boolean existsByLectureAndUser(Lecture lecture, User user) {
+        return lectureRegistrationJPARepository.existsByLectureAndUser(lecture, user);
     }
 }

@@ -5,6 +5,7 @@ import io.hhplus.cleanarchitecture.domain.lecture.Lecture;
 import io.hhplus.cleanarchitecture.domain.lecture.LectureRepository;
 import io.hhplus.cleanarchitecture.domain.lecture.LectureService;
 import io.hhplus.cleanarchitecture.domain.user.User;
+import io.hhplus.cleanarchitecture.domain.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,13 @@ public class LectureFacadeConcurrencyTest {
     @Autowired
     private LectureRepository lectureRepository;
 
-
     private Integer lectureId;
+
     @Autowired
     private LectureService lectureService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @BeforeEach
     public void setup() {
@@ -84,4 +88,42 @@ public class LectureFacadeConcurrencyTest {
         Lecture lecture = lectureService.findAndValidateLecture(lectureId);
         assertEquals(0, lecture.getRemainingCapacity(), "정원이 0이어야 한다.");
     }
+
+    @Test
+    void 동일_사용자가_같은_특강을_5번_신청했을_때_1번만_성공한다() throws InterruptedException {
+        int totalRequests = 5;
+        CountDownLatch startLatch = new CountDownLatch(1);
+        CountDownLatch endLatch = new CountDownLatch(totalRequests);
+        ConcurrentLinkedQueue<Exception> exceptions = new ConcurrentLinkedQueue<>();
+        User user = userRepository.findById(20)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        Integer userId = user.getId();
+        ExecutorService executor = Executors.newFixedThreadPool(totalRequests);
+
+        for (int i = 0; i < totalRequests; i++) {
+            executor.submit(() -> {
+                try {
+                    startLatch.await(); // 모든 요청이 동시에 시작되도록
+                    LectureRegistrationRequest request = new LectureRegistrationRequest(lectureId, userId);
+                    lectureFacade.registerLecture(request);
+                } catch (Exception e) {
+                    exceptions.add(e);
+                } finally {
+                    endLatch.countDown();
+                }
+            });
+        }
+
+        // 요청 시작
+        startLatch.countDown();
+        endLatch.await(); // 모든 요청 완료 대기
+        executor.shutdown();
+        System.out.println(exceptions);
+        // 결과 검증
+        int successfulRequests = totalRequests - exceptions.size();
+        assertEquals(1, successfulRequests, "동일한 사용자에 대해 1번만 신청이 성공해야 한다.");
+        assertEquals(4, exceptions.size(), "동일한 사용자에 대해 4번은 실패해야 한다.");
+    }
+
+
 }

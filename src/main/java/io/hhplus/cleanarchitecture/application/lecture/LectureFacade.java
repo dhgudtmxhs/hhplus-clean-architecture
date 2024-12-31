@@ -30,6 +30,9 @@ public class LectureFacade {
         // 특강 조회와 검증
         Lecture lecture = lectureService.findAndValidateLecture(request.lectureId());
 
+        // 중복 신청 검증
+        lectureService.validateNotRegistered(lecture, user);
+
         // 특강 신청
         LectureRegistration registration = lectureService.registerLecture(lecture, user);
 
