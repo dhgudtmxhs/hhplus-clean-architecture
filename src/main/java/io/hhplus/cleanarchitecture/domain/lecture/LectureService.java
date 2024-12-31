@@ -3,6 +3,7 @@ package io.hhplus.cleanarchitecture.domain.lecture;
 import io.hhplus.cleanarchitecture.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +15,7 @@ public class LectureService {
     private final LectureRepository lectureRepository;
 
     // 특강 조회 및 검증 로직
+    @Transactional
     public Lecture findAndValidateLecture(Integer lectureId) {
         // 특강 조회
         Lecture lecture = lectureRepository.findLectureById(lectureId)
@@ -21,7 +23,7 @@ public class LectureService {
 
         // 날짜 및 정원 검증
         lecture.validateApplicationDate(LocalDate.now());
-        lecture.validateRemainingCapacity();
+        /*lecture.validateRemainingCapacity();*/
 
         return lecture;
     }
