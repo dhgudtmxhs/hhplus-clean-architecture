@@ -45,7 +45,6 @@
 
 ![스크린샷 2024-12-24 오후 10 22 50](https://github.com/user-attachments/assets/63912f52-f6bf-480f-b432-4b1d809b9040)
 
-
 > #### Table default : id, delete_at, created_at, updated_at
 
 ### lecture(특강) 
